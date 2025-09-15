@@ -626,7 +626,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
   tempObjHolder: {fileID: 1174691787}
-  shoot: 0
+  initShoot: 0
   otherGun: {fileID: 1933259764}
   projectileSpeed: 40
 --- !u!1 &699014395
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
   tempObjHolder: {fileID: 1174691787}
-  shoot: 1
+  initShoot: 1
   otherGun: {fileID: 460314719}
   projectileSpeed: 40
 --- !u!1660057539 &9223372036854775807

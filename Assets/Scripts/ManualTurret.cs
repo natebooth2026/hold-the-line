@@ -10,7 +10,9 @@ public class ManualTurret : MonoBehaviour
 {
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform tempObjHolder;
-    [SerializeField] bool shoot;
+
+    bool shoot;
+    private string initShootName = "LeftGun";
     [SerializeField] GameObject otherGun;
     private ManualTurret otherGunScript;
 
@@ -18,17 +20,22 @@ public class ManualTurret : MonoBehaviour
     private float maxRayDistance = 100f;
 
     private bool isShooting = false;
+    private float shootSwitchBuffer = 1f; //ALLOWS FOR UPGRADES :D
+    private const float PROJECTILE_DESTROY_TIME = 5f;
 
     private void Start()
     {
         otherGunScript = otherGun.GetComponent<ManualTurret>();
+        if(this.name == initShootName)
+        {
+            shoot = true;
+        }
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && shoot == true && !isShooting)
+        if (Input.GetMouseButtonDown(0) && shoot == true && !isShooting && !otherGunScript.isShooting)
         {
             shoot = false;
-            otherGunScript.shoot = true;
             StartCoroutine(ProjectileLaunch());
         }   
     }
@@ -60,19 +67,13 @@ public class ManualTurret : MonoBehaviour
                 tempBody.velocity = dir * projectileSpeed;
             }
 
-            //Collider tempCollide = temp.GetComponent<Collider>();
-            //tempCollide.enabled = true;
-            //if (tempCollide != null)
-            //{
-            //    if (tempCollide.isTrigger){
-            //        Destroy(temp);
-            //    }
+            Collider tempCollide = temp.GetComponent<Collider>();
+            tempCollide.enabled = true;
 
-            //}
+            StartCoroutine(delayDestroyProjectile(temp, PROJECTILE_DESTROY_TIME));
 
-            StartCoroutine(delayDestroyProjectile(temp, 5f));
-
-            yield return null;
+            yield return new WaitForSeconds(shootSwitchBuffer);
+            otherGunScript.shoot = true;
             isShooting = false;
         }
     }
@@ -80,8 +81,18 @@ public class ManualTurret : MonoBehaviour
     private IEnumerator delayDestroyProjectile(GameObject x, float time)
     {
         yield return new WaitForSeconds(time);
+        otherGunScript.shoot = true;
         if (x != null) Destroy(x);
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision == null) return;
+        else
+        {
+            Destroy(collision.gameObject);
+        }
+    }
+
 }//EndScript
 
