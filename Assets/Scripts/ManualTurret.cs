@@ -1,9 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Numerics;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class ManualTurret : MonoBehaviour
@@ -95,4 +90,3 @@ public class ManualTurret : MonoBehaviour
     }
 
 }//EndScript
-
