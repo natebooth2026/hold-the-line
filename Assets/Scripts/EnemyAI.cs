@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer;
+    
+    private float fixedYPosition; // Store the initial Y position
 
     //Attacking
     public float timeBetweenAttacks;
@@ -28,6 +30,7 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.Find("TurretSeat").transform;
         agent = GetComponent<NavMeshAgent>();
+        fixedYPosition = transform.position.y; // Store the starting Y position
     }
 
     private void Update()
@@ -40,6 +43,11 @@ public class EnemyAI : MonoBehaviour
         {
             AttackPlayer();
         }
+        
+        // Lock Y position to prevent vertical movement
+        Vector3 pos = transform.position;
+        pos.y = fixedYPosition;
+        transform.position = pos;
     }
 
     private void MoveToPlayer()
