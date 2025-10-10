@@ -347,7 +347,11 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -731,7 +735,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
+<<<<<<< HEAD
   tempObjHolder: {fileID: 0}
+=======
+  tempObjHolder: {fileID: 700902203}
+>>>>>>> master
   otherGun: {fileID: 1933259764}
   projectileSpeed: 40
 --- !u!1 &699014395
@@ -840,6 +848,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
+=======
+--- !u!1 &700902202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700902203}
+  m_Layer: 6
+  m_Name: PROJECTILES
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &700902203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700902202}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.649148, y: -2.082591, z: 5.790111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> master
 --- !u!1 &759754296
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,16 +1005,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 759754302}
+<<<<<<< HEAD
+=======
+  gun: {fileID: 759754300}
+>>>>>>> master
   player: {fileID: 1248654950}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   whatIsPlayer:
     serializedVersion: 2
+<<<<<<< HEAD
     m_Bits: 64
   timeBetweenAttacks: 0
   attackRange: 5
   playerInAttackRange: 0
+=======
+    m_Bits: 256
+  timeBetweenAttacks: 0
+  projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
+    type: 3}
+  tempObjHolder: {fileID: 700902203}
+  projectileSpeed: 10
+  cooldown: 2
+  attackRange: 5
+  playerInAttackRange: 0
+  health: 0
+>>>>>>> master
 --- !u!195 &759754302
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1238,7 +1297,11 @@ GameObject:
   - component: {fileID: 1248654949}
   - component: {fileID: 1248654948}
   - component: {fileID: 1248654947}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: TurretSeat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1412,7 +1475,11 @@ GameObject:
   - component: {fileID: 1428934033}
   - component: {fileID: 1428934032}
   - component: {fileID: 1428934031}
+<<<<<<< HEAD
   m_Layer: 0
+=======
+  m_Layer: 7
+>>>>>>> master
   m_Name: EnemyBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1518,7 +1585,11 @@ GameObject:
   - component: {fileID: 1744624188}
   - component: {fileID: 1744624190}
   - component: {fileID: 1744624189}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: RoundCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,7 +1668,11 @@ GameObject:
   - component: {fileID: 1763091536}
   - component: {fileID: 1763091538}
   - component: {fileID: 1763091537}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1679,7 +1754,11 @@ GameObject:
   - component: {fileID: 1765831855}
   - component: {fileID: 1765831854}
   - component: {fileID: 1765831853}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: Hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1803,7 +1882,11 @@ GameObject:
   - component: {fileID: 1778195844}
   - component: {fileID: 1778195846}
   - component: {fileID: 1778195845}
+<<<<<<< HEAD
   m_Layer: 6
+=======
+  m_Layer: 8
+>>>>>>> master
   m_Name: PlayerKillCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2026,7 +2109,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
+<<<<<<< HEAD
   tempObjHolder: {fileID: 0}
+=======
+  tempObjHolder: {fileID: 700902203}
+>>>>>>> master
   otherGun: {fileID: 460314719}
   projectileSpeed: 40
 --- !u!1660057539 &9223372036854775807
@@ -2041,3 +2128,7 @@ SceneRoots:
   - {fileID: 1368826121}
   - {fileID: 1024680491}
   - {fileID: 1832082434}
+<<<<<<< HEAD
+=======
+  - {fileID: 700902203}
+>>>>>>> master

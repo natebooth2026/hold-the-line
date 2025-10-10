@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Experimental.Rendering;
 
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
-
+    [SerializeField] Transform gun;
     public Transform player;
+    private HealthBarManager playerControl;
 
     public LayerMask whatIsGround, whatIsPlayer;
     
@@ -16,10 +19,18 @@ public class EnemyAI : MonoBehaviour
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    private float maxRayDistance = 100f;
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] Transform tempObjHolder;
+    public float projectileSpeed = 10f;
+    private const float PROJECTILE_DESTROY_TIME = 5f;
+    public float cooldown = 2f;
 
     //States
     public float attackRange;
     public bool playerInAttackRange;
+    private bool shooting = false;
+    public int health;
 
     void OnDrawGizmosSelected()
     {
@@ -31,6 +42,8 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("TurretSeat").transform;
         agent = GetComponent<NavMeshAgent>();
         fixedYPosition = transform.position.y; // Store the starting Y position
+        playerControl = player.GetComponentInChildren<HealthBarManager>();
+        health = 100;
     }
 
     private void Update()
@@ -54,7 +67,54 @@ public class EnemyAI : MonoBehaviour
     {
         agent.SetDestination(player.position);
     }
-    
+
+    private IEnumerator delayDestroyProjectile(GameObject x, float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (x != null) Destroy(x);
+    }
+
+    private IEnumerator Shoot()
+    {
+        bool raycastSuccess = false;
+        UnityEngine.Vector3 target = new UnityEngine.Vector3();
+
+        Ray r = new Ray(gun.position, gun.forward);
+        raycastSuccess = Physics.Raycast(r, maxRayDistance);
+
+        if (raycastSuccess)
+        {
+            target = r.origin + r.direction * maxRayDistance;
+
+            UnityEngine.Vector3 tempPos = gun.position;
+
+            GameObject temp = Instantiate(projectilePrefab, tempPos, UnityEngine.Quaternion.identity, tempObjHolder);
+
+            UnityEngine.Vector3 dir = (target - temp.transform.position).normalized;
+
+            Rigidbody tempBody = temp.GetComponent<Rigidbody>();
+            if (tempBody != null)
+            {
+                tempBody.useGravity = false;
+                tempBody.drag = 0f;
+                tempBody.velocity = dir * projectileSpeed;
+            }
+
+            Collider tempCollide = temp.GetComponent<Collider>();
+            tempCollide.enabled = true;
+
+            StartCoroutine(delayDestroyProjectile(temp, PROJECTILE_DESTROY_TIME));
+            shooting = false;
+            yield return null;
+        }
+    }
+
+    private IEnumerator repeatShoot(float c)
+    {
+        shooting = true;
+        yield return new WaitForSeconds(c);
+        StartCoroutine(Shoot());
+    }
 
     private void AttackPlayer()
     {
@@ -64,5 +124,9 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(player);
 
         //Attack code here
+        if (health > 0 && !shooting)
+        {
+            StartCoroutine(repeatShoot(cooldown));
+        }
     }
 }
