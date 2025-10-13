@@ -18,17 +18,23 @@ public class ManualTurret : MonoBehaviour
     private float shootSwitchBuffer = 1f; //ALLOWS FOR UPGRADES :D
     private const float PROJECTILE_DESTROY_TIME = 5f;
 
+    [SerializeField] GameObject eventSystem;
+    private UpgradeToggle upgradeToggle;
+
     private void Start()
     {
         otherGunScript = otherGun.GetComponent<ManualTurret>();
-        if(this.name == initShootName)
+        if (this.name == initShootName)
         {
             shoot = true;
         }
+        upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && shoot == true && !isShooting && !otherGunScript.isShooting)
+        if (Input.GetMouseButtonDown(0) && shoot == true 
+            && !isShooting && !otherGunScript.isShooting
+            && !upgradeToggle.activeUpgradeMenu)
         {
             shoot = false;
             StartCoroutine(ProjectileLaunch());

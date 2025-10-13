@@ -19,7 +19,6 @@ public class EnemyAI : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
     private float maxRayDistance = 100f;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform tempObjHolder;
@@ -33,6 +32,10 @@ public class EnemyAI : MonoBehaviour
     private bool shooting = false;
     [SerializeField] public int health;
 
+    //Upgrade Menu Toggle
+    [SerializeField] GameObject eventSystem;
+    private UpgradeToggle upgradeToggle;
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -44,7 +47,8 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         fixedYPosition = transform.position.y; // Store the starting Y position
         playerControl = player.GetComponentInChildren<HealthBarManager>();
-        if(health <= 0) health = 1;
+        if (health <= 0) health = 1;
+        upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
     }
 
     private void Update()
@@ -52,7 +56,7 @@ public class EnemyAI : MonoBehaviour
         if(health <= 0) //kills the enemy
         {
             Destroy(enemyContainer);
-        } else
+        } else if (!upgradeToggle.activeUpgradeMenu)
         {
             //Check for sight and attack range
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -67,6 +71,9 @@ public class EnemyAI : MonoBehaviour
             Vector3 pos = transform.position;
             pos.y = fixedYPosition;
             transform.position = pos;
+        } else if (upgradeToggle.activeUpgradeMenu) //freezes the enemy
+        {
+            agent.SetDestination(transform.position);
         }
     }
 
