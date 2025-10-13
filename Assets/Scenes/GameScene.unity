@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 215195574}
   - component: {fileID: 215195573}
   - component: {fileID: 215195572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyRotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be93cab3335d6342b9876cfb5cdece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
+  projectilePrefab: {fileID: 50707282001121650, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
   tempObjHolder: {fileID: 700902203}
   otherGun: {fileID: 1933259764}
@@ -885,7 +885,7 @@ GameObject:
   - component: {fileID: 759754297}
   - component: {fileID: 759754302}
   - component: {fileID: 759754301}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyAi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,7 +994,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 759754302}
-  gun: {fileID: 759754300}
+  gun: {fileID: 1428934030}
+  enemyContainer: {fileID: 1832082433}
   player: {fileID: 1248654950}
   whatIsGround:
     serializedVersion: 2
@@ -1003,14 +1004,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   timeBetweenAttacks: 0
-  projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
+  projectilePrefab: {fileID: 135197534048395959, guid: 41544f7cd79eb15428cf296c31e2f83c,
     type: 3}
   tempObjHolder: {fileID: 700902203}
   projectileSpeed: 10
   cooldown: 2
   attackRange: 5
   playerInAttackRange: 0
-  health: 0
+  health: 1
 --- !u!195 &759754302
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1046,7 +1047,7 @@ GameObject:
   - component: {fileID: 800308579}
   - component: {fileID: 800308578}
   - component: {fileID: 800308581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyTreads
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1450,7 +1451,7 @@ GameObject:
   - component: {fileID: 1428934033}
   - component: {fileID: 1428934032}
   - component: {fileID: 1428934031}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EnemyBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1759,6 +1760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 1763091537}
+  currentHealth: 100
 --- !u!222 &1765831854
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1918,7 +1920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832082434}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2062,7 +2064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be93cab3335d6342b9876cfb5cdece8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 6017174111480769342, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
+  projectilePrefab: {fileID: 50707282001121650, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
   tempObjHolder: {fileID: 700902203}
   otherGun: {fileID: 460314719}

@@ -79,14 +79,4 @@ public class ManualTurret : MonoBehaviour
         otherGunScript.shoot = true;
         if (x != null) Destroy(x);
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision == null) return;
-        else
-        {
-            Destroy(collision.gameObject);
-        }
-    }
-
 }//EndScript

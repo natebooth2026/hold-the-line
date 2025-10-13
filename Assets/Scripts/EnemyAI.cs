@@ -9,6 +9,7 @@ public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     [SerializeField] Transform gun;
+    [SerializeField] GameObject enemyContainer;
     public Transform player;
     private HealthBarManager playerControl;
 
@@ -30,7 +31,7 @@ public class EnemyAI : MonoBehaviour
     public float attackRange;
     public bool playerInAttackRange;
     private bool shooting = false;
-    public int health;
+    [SerializeField] public int health;
 
     void OnDrawGizmosSelected()
     {
@@ -43,24 +44,30 @@ public class EnemyAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         fixedYPosition = transform.position.y; // Store the starting Y position
         playerControl = player.GetComponentInChildren<HealthBarManager>();
-        health = 100;
+        if(health <= 0) health = 1;
     }
 
     private void Update()
     {
-        //Check for sight and attack range
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-        if (!playerInAttackRange) MoveToPlayer();
-
-        if (playerInAttackRange)
+        if(health <= 0) //kills the enemy
         {
-            AttackPlayer();
+            Destroy(enemyContainer);
+        } else
+        {
+            //Check for sight and attack range
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+            if (!playerInAttackRange) MoveToPlayer();
+
+            if (playerInAttackRange)
+            {
+                AttackPlayer();
+            }
+            
+            // Lock Y position to prevent vertical movement
+            Vector3 pos = transform.position;
+            pos.y = fixedYPosition;
+            transform.position = pos;
         }
-        
-        // Lock Y position to prevent vertical movement
-        Vector3 pos = transform.position;
-        pos.y = fixedYPosition;
-        transform.position = pos;
     }
 
     private void MoveToPlayer()
@@ -79,7 +86,8 @@ public class EnemyAI : MonoBehaviour
         bool raycastSuccess = false;
         UnityEngine.Vector3 target = new UnityEngine.Vector3();
 
-        Ray r = new Ray(gun.position, gun.forward);
+        Vector3 forward = new Vector3(gun.forward.x, -gun.forward.y, gun.forward.z);
+        Ray r = new Ray(gun.position, forward);
         raycastSuccess = Physics.Raycast(r, maxRayDistance);
 
         if (raycastSuccess)

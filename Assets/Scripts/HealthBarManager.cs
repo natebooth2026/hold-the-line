@@ -9,7 +9,7 @@ public class HealthBarManager : MonoBehaviour
 
     public Text healthText; // Reference to the UI Text component for displaying health
 
-    private int currentHealth = 100; // Default health value
+    public int currentHealth = 100; // Default health value
 
     // Singleton pattern to ensure only one instance of HealthBarManager exists
     private void Awake()
@@ -29,11 +29,16 @@ public class HealthBarManager : MonoBehaviour
     public void UpdateHealth(int health)
     {
         currentHealth = health; // Update current health
-        healthText.text = "Health: " + currentHealth / 100 * 100 + "%"; // Display health as a percentage for now
+        healthText.text = "Health: " + currentHealth + "%"; // Display health as a percentage for now
     }
 
     // Start is called before the first frame update to initialize the health display
     void Start()
+    {
+        UpdateHealth(currentHealth);
+    }
+
+    void Update()
     {
         UpdateHealth(currentHealth);
     }
