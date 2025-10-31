@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "A-HoldTheLine.sln"
+    "dotnet.defaultSolution": "Hold-The-Line.sln"
 }
