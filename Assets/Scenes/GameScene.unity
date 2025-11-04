@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 215195574}
   - component: {fileID: 215195573}
   - component: {fileID: 215195572}
+  - component: {fileID: 215195575}
   m_Layer: 9
   m_Name: EnemyRotator
   m_TagString: Enemy
@@ -290,11 +291,12 @@ Transform:
   m_GameObject: {fileID: 215195570}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.022833824, z: 0.031168938}
-  m_LocalScale: {x: 1, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.495, z: -0.204}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 759754300}
+  m_Children:
+  - {fileID: 1428934030}
+  m_Father: {fileID: 1832082434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &215195572
 SphereCollider:
@@ -313,7 +315,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -367,6 +369,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215195570}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &215195575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215195570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc1936c56d50c74e80029e66440dd3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 1832082435}
+  gun: {fileID: 215195571}
+  enemyContainer: {fileID: 1832082433}
+  player: {fileID: 1248654950}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  timeBetweenAttacks: 0
+  projectilePrefab: {fileID: 135197534048395959, guid: 41544f7cd79eb15428cf296c31e2f83c,
+    type: 3}
+  tempObjHolder: {fileID: 700902203}
+  projectileSpeed: 10
+  cooldown: 2
+  attackRange: 0
+  playerInAttackRange: 0
+  health: 0
+  eventSystem: {fileID: 0}
 --- !u!1 &242571048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1121,7 @@ GameObject:
   - component: {fileID: 577143582}
   - component: {fileID: 577143584}
   - component: {fileID: 577143583}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1170,7 +1204,7 @@ GameObject:
   - component: {fileID: 578439075}
   - component: {fileID: 578439077}
   - component: {fileID: 578439076}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,7 +1424,7 @@ GameObject:
   - component: {fileID: 718511689}
   - component: {fileID: 718511691}
   - component: {fileID: 718511690}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1474,8 +1508,6 @@ GameObject:
   - component: {fileID: 759754299}
   - component: {fileID: 759754298}
   - component: {fileID: 759754297}
-  - component: {fileID: 759754302}
-  - component: {fileID: 759754301}
   - component: {fileID: 759754303}
   m_Layer: 9
   m_Name: EnemyAi
@@ -1483,7 +1515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!136 &759754297
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1565,68 +1597,12 @@ Transform:
   m_GameObject: {fileID: 759754296}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.34673974, y: -0.0681383, z: 0.010046005}
+  m_LocalPosition: {x: 0, y: 0.495, z: -0.204}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1428934030}
-  - {fileID: 215195571}
+  m_Children: []
   m_Father: {fileID: 1832082434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &759754301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759754296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffc1936c56d50c74e80029e66440dd3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 759754302}
-  gun: {fileID: 1428934030}
-  enemyContainer: {fileID: 1832082433}
-  player: {fileID: 1248654950}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 256
-  timeBetweenAttacks: 0
-  projectilePrefab: {fileID: 135197534048395959, guid: 41544f7cd79eb15428cf296c31e2f83c,
-    type: 3}
-  tempObjHolder: {fileID: 700902203}
-  projectileSpeed: 10
-  cooldown: 2
-  attackRange: 5
-  playerInAttackRange: 0
-  health: 1
-  eventSystem: {fileID: 1368826118}
---- !u!195 &759754302
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759754296}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5000001
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!54 &759754303
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1666,7 +1642,6 @@ GameObject:
   - component: {fileID: 800308580}
   - component: {fileID: 800308579}
   - component: {fileID: 800308578}
-  - component: {fileID: 800308581}
   m_Layer: 9
   m_Name: EnemyTreads
   m_TagString: Enemy
@@ -1683,7 +1658,7 @@ Transform:
   m_GameObject: {fileID: 800308576}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.34673977, y: -0.4021383, z: 0.22121495}
+  m_LocalPosition: {x: 0, y: 0.16100001, z: 0}
   m_LocalScale: {x: 0.63, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1760,19 +1735,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800308576}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &800308581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800308576}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7611177d1e3d59f4eba52f44324661ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyToFollow: {fileID: 759754300}
 --- !u!1 &813304373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 813304374}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HexMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1871,7 +1833,7 @@ GameObject:
   - component: {fileID: 851138083}
   - component: {fileID: 851138085}
   - component: {fileID: 851138084}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2061,7 +2023,7 @@ GameObject:
   - component: {fileID: 1010536037}
   - component: {fileID: 1010536039}
   - component: {fileID: 1010536038}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2168,7 +2130,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1023
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -2179,7 +2141,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: f11d5e2e694f9b0499ed0eb97c91a449, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 81d54942a8fb7e244b367e7611108f1e, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1024680491
 Transform:
@@ -2207,7 +2169,7 @@ GameObject:
   - component: {fileID: 1118952059}
   - component: {fileID: 1118952061}
   - component: {fileID: 1118952060}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2497,11 +2459,11 @@ Transform:
   m_GameObject: {fileID: 1428934029}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.01999998, z: 0.375}
-  m_LocalScale: {x: 0.3, y: 0.15000004, z: 0.30000007}
+  m_LocalPosition: {x: 0, y: 0.0028338432, z: 0.6876621}
+  m_LocalScale: {x: 0.3, y: 0.30000007, z: 0.30000007}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 759754300}
+  m_Father: {fileID: 215195571}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!136 &1428934031
 CapsuleCollider:
@@ -2950,6 +2912,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832082434}
+  - component: {fileID: 1832082435}
+  - component: {fileID: 1832082436}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -2966,14 +2930,69 @@ Transform:
   m_GameObject: {fileID: 1832082433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.94, y: 0.6711383, z: -1.02}
+  m_LocalPosition: {x: 12.21, y: 0.079, z: 12.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 800308577}
+  - {fileID: 215195571}
   - {fileID: 759754300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1832082435
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832082433}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.56
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.08
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1832082436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832082433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc1936c56d50c74e80029e66440dd3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 1832082435}
+  gun: {fileID: 215195571}
+  enemyContainer: {fileID: 1832082433}
+  player: {fileID: 1248654950}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  timeBetweenAttacks: 0
+  projectilePrefab: {fileID: 135197534048395959, guid: 41544f7cd79eb15428cf296c31e2f83c,
+    type: 3}
+  tempObjHolder: {fileID: 700902203}
+  projectileSpeed: 10
+  cooldown: 2
+  attackRange: 6
+  playerInAttackRange: 0
+  health: 0
+  eventSystem: {fileID: 1368826118}
 --- !u!1 &1837808357
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,7 +3237,7 @@ GameObject:
   - component: {fileID: 1049436426464835919}
   - component: {fileID: 4125160145661834986}
   - component: {fileID: 2223498393141199392}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hexagon1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,6 +10,8 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     [SerializeField] Transform gun;
     [SerializeField] GameObject enemyContainer;
+
+    private Transform turret;
     public Transform player;
     private HealthBarManager playerControl;
 
@@ -49,6 +51,8 @@ public class EnemyAI : MonoBehaviour
         playerControl = player.GetComponentInChildren<HealthBarManager>();
         if (health <= 0) health = 1;
         upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
+
+        turret = transform.GetChild(1);
     }
 
     private void Update()
@@ -136,7 +140,7 @@ public class EnemyAI : MonoBehaviour
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        turret.LookAt(player);
 
         //Attack code here
         if (health > 0 && !shooting)
