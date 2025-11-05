@@ -97,7 +97,7 @@ public class EnemyAI : MonoBehaviour
         bool raycastSuccess = false;
         UnityEngine.Vector3 target = new UnityEngine.Vector3();
 
-        Vector3 forward = new Vector3(gun.forward.x, -gun.forward.y, gun.forward.z);
+        Vector3 forward = new Vector3(gun.forward.x, gun.forward.y, gun.forward.z);
         Ray r = new Ray(gun.position, forward);
         raycastSuccess = Physics.Raycast(r, maxRayDistance);
 
