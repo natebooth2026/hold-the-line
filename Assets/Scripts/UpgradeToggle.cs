@@ -7,6 +7,7 @@ public class UpgradeToggle : MonoBehaviour
     public bool activeUpgradeMenu = false;
     [SerializeField] GameObject firstPersonCam;
     [SerializeField] GameObject birdseyeCam;
+    [SerializeField] GameObject upgradeMenu;
     // Update is called once per frame
     void Update()
     {
@@ -16,11 +17,13 @@ public class UpgradeToggle : MonoBehaviour
             if (!activeUpgradeMenu)
             {
                 birdseyeCam.SetActive(false);
+                upgradeMenu.SetActive(false);
                 firstPersonCam.SetActive(true);
             } else
             {
                 firstPersonCam.SetActive(false);
                 birdseyeCam.SetActive(true);
+                upgradeMenu.SetActive(true);
             }
         }  
     }

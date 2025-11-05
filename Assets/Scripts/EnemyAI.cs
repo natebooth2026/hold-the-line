@@ -103,6 +103,7 @@ public class EnemyAI : MonoBehaviour
 
         if (raycastSuccess)
         {
+            Debug.Log("MADE IT HERE"); //DEBUG
             target = r.origin + r.direction * maxRayDistance;
 
             UnityEngine.Vector3 tempPos = gun.position;
