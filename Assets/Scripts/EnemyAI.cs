@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Experimental.Rendering;
+using UnityEngine.Scripting;
 
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     [SerializeField] Transform gun;
     [SerializeField] GameObject enemyContainer;
+
+    private Transform turret;
     public Transform player;
     private HealthBarManager playerControl;
 
@@ -43,12 +46,20 @@ public class EnemyAI : MonoBehaviour
     }
     private void Awake()
     {
+        if(agent == null || gun == null || enemyContainer == null ||
+           player == null || projectilePrefab == null ||
+           tempObjHolder == null || eventSystem == null)
+        {
+            Debug.LogError("EnemyAI--MISSING OBJECT ERROR");
+        }
         player = GameObject.Find("TurretSeat").transform;
         agent = GetComponent<NavMeshAgent>();
         fixedYPosition = transform.position.y; // Store the starting Y position
         playerControl = player.GetComponentInChildren<HealthBarManager>();
         if (health <= 0) health = 1;
         upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
+
+        turret = transform.GetChild(1);
     }
 
     private void Update()
@@ -93,7 +104,7 @@ public class EnemyAI : MonoBehaviour
         bool raycastSuccess = false;
         UnityEngine.Vector3 target = new UnityEngine.Vector3();
 
-        Vector3 forward = new Vector3(gun.forward.x, -gun.forward.y, gun.forward.z);
+        Vector3 forward = new Vector3(gun.forward.x, gun.forward.y, gun.forward.z);
         Ray r = new Ray(gun.position, forward);
         raycastSuccess = Physics.Raycast(r, maxRayDistance);
 
@@ -136,7 +147,7 @@ public class EnemyAI : MonoBehaviour
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        turret.LookAt(player);
 
         //Attack code here
         if (health > 0 && !shooting)

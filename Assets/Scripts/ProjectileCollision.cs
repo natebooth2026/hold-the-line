@@ -18,7 +18,7 @@ public class ProjectileCollision : MonoBehaviour
                 collision.gameObject.GetComponentInChildren<HealthBarManager>().currentHealth -= 1;
             } else if (collision.gameObject.layer == enemyLayer)
             {
-                collision.gameObject.GetComponentInChildren<EnemyAI>().health -= 1;
+                collision.gameObject.GetComponentInParent<EnemyAI>().health -= 1;
             }
         }
     }
