@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour
         if(health <= 0) //kills the enemy
         {
             Destroy(enemyContainer);
-        } else if (!upgradeToggle.activeUpgradeMenu)
+        } else
         {
             //Check for sight and attack range
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
@@ -82,9 +82,6 @@ public class EnemyAI : MonoBehaviour
             Vector3 pos = transform.position;
             pos.y = fixedYPosition;
             transform.position = pos;
-        } else if (upgradeToggle.activeUpgradeMenu) //freezes the enemy
-        {
-            agent.SetDestination(transform.position);
         }
     }
 
