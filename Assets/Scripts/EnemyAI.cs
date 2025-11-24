@@ -46,21 +46,26 @@ public class EnemyAI : MonoBehaviour
     }
     private void Awake()
     {
-        if(agent == null || gun == null || enemyContainer == null ||
-           player == null || projectilePrefab == null ||
-           tempObjHolder == null || eventSystem == null)
-        {
-            Debug.LogError("EnemyAI--MISSING OBJECT ERROR");
-        }
-        player = GameObject.Find("TurretSeat").transform;
+        // Auto-assign components
         agent = GetComponent<NavMeshAgent>();
-        fixedYPosition = transform.position.y; // Store the starting Y position
+        player = GameObject.Find("TurretSeat").transform;
+        eventSystem = GameObject.Find("EventSystem");
+
+        // Only check fields that MUST be manually assigned on the prefab
+        if (gun == null || enemyContainer == null ||
+            projectilePrefab == null || tempObjHolder == null)
+        {
+            Debug.LogError("EnemyAI -- MISSING OBJECT ERROR");
+        }
+
+        fixedYPosition = transform.position.y;
         playerControl = player.GetComponentInChildren<HealthBarManager>();
         if (health <= 0) health = 1;
-        upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
 
+        upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
         turret = transform.GetChild(1);
     }
+
 
     private void Update()
     {
