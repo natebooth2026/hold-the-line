@@ -29,6 +29,7 @@ public class HealthBarManager : MonoBehaviour
     public void UpdateHealth(int health)
     {
         currentHealth = health; // Update current health
+        if(currentHealth <= 0) currentHealth = 0;
         healthText.text = "Health: " + currentHealth + "%"; // Display health as a percentage for now
     }
 

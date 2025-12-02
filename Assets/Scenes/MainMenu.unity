@@ -2796,7 +2796,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &1101201138]
+--- !u!222 &1101201138
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3233,6 +3233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GAME_SCENE: GameScene
+  MENU_SCENE: MainMenu
 --- !u!114 &1251296599
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,10 +11,10 @@ public class ManualTurret : MonoBehaviour
     [SerializeField] GameObject otherGun;
     private ManualTurret otherGunScript;
 
-    public float projectileSpeed = 10f;
+    public float projectileSpeed = 8f;
     private float maxRayDistance = 100f;
 
-    private bool isShooting = false;
+    public bool isShooting = false;
     private float shootSwitchBuffer = 1f; //ALLOWS FOR UPGRADES :D
     private const float PROJECTILE_DESTROY_TIME = 5f;
 
@@ -38,7 +38,7 @@ public class ManualTurret : MonoBehaviour
         {
             shoot = false;
             StartCoroutine(ProjectileLaunch());
-        }   
+        }  
     }
 
     private IEnumerator ProjectileLaunch() {
