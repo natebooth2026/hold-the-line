@@ -12,6 +12,7 @@ public class ProjectileCollision : MonoBehaviour
         if(collision == null) return;
         else
         {
+            Debug.Log("Projectile collided with: " + collision.gameObject.name);
             Destroy(this.gameObject);
             if(collision.gameObject.layer == playerLayer)
             {
