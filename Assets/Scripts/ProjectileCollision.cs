@@ -5,22 +5,51 @@ using UnityEngine;
 
 public class ProjectileCollision : MonoBehaviour
 {
-    public int playerLayer = 8;
-    public int enemyLayer = 9;
+    public LayerMask playerLayer;
+    public LayerMask enemyLayer;
+
+    bool IsInLayerMask(Collision obj, LayerMask mask)
+    {
+        if (obj == null) return false;
+        return (mask.value & (1 << obj.gameObject.layer)) != 0;
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision == null) return;
-        else
+        Debug.Log("Projectile collided with: " + collision.gameObject.name);
+        Debug.Log("(LAYER) Projectile collided with: " + collision.gameObject.layer);
+
+        if (IsInLayerMask(collision, playerLayer))
         {
-            Debug.Log("Projectile collided with: " + collision.gameObject.name);
-            Destroy(this.gameObject);
-            if(collision.gameObject.layer == playerLayer)
+            HealthBarManager healthBar = FindObjectOfType<HealthBarManager>();
+            if (healthBar != null)
             {
-                collision.gameObject.GetComponentInChildren<HealthBarManager>().currentHealth -= 1;
-            } else if (collision.gameObject.layer == enemyLayer)
+                healthBar.currentHealth -= 1;
+                healthBar.UpdateHealth(healthBar.currentHealth);
+                Debug.Log("Player hit! Current Health: " + healthBar.currentHealth);
+            }
+            else
             {
-                collision.gameObject.GetComponentInParent<EnemyAI>().health -= 1;
+                Debug.LogWarning("ProjectileCollision: No HealthBarManager found in the scene!");
             }
         }
+        else
+        {
+            Debug.Log("Not Player Layer!");
+        }
+
+        if (IsInLayerMask(collision, enemyLayer))
+        {
+            EnemyAI enemyAI = collision.gameObject.GetComponentInParent<EnemyAI>();
+            if (enemyAI != null)
+            {
+                enemyAI.health -= 1;
+            }
+        }
+        else
+        {
+            Debug.Log("Not Enemy Layer!");
+        }
+
+        Destroy(gameObject);
     }
 }

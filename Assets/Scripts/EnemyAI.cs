@@ -51,7 +51,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Auto-assign components
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("TurretSeat").transform;
+        player = GameObject.Find("gunner_gun_connector").transform;
         eventSystem = GameObject.Find("EventSystem");
         if(tempObjHolder == null)
             tempObjHolder = GameObject.Find("PROJECTILES").transform;
@@ -96,10 +96,9 @@ public class EnemyAI : MonoBehaviour
         {
             //Check for sight and attack range
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-            if (!playerInAttackRange) MoveToPlayer();
-
-            if (playerInAttackRange)
-            {
+            if (!playerInAttackRange){
+                MoveToPlayer();
+            } else{
                 AttackPlayer();
             }
             
@@ -169,8 +168,9 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move
-        agent.SetDestination(transform.position);
+        //Make sure enemy doesn't move by making its speed 0
+        agent.speed = 0;
+        
 
         //Attack code here
         if (health > 0 && !shooting)
@@ -187,7 +187,7 @@ public class EnemyAI : MonoBehaviour
             if (gun != null)
             {
                 // Direction from gun to player
-                Vector3 dir = (player.position - bulletSpawnPoint.position).normalized;
+                Vector3 dir = (player.position - gun.position).normalized;
 
                 // Rotate the direction around the turret's local right axis by the pitch offset
                 Vector3 rotatedDir = Quaternion.AngleAxis(barrelPitchOffset, turret.right) * dir;

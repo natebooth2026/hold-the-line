@@ -18,6 +18,6 @@ public class CameraControl : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, minVerticalAngle, maxVerticalAngle); // Use both min and max angles
 
         transform.localRotation = UnityEngine.Quaternion.Euler(xRotation, 0f, 0f);
-        Player.Rotate(UnityEngine.Vector3.up * mouseX * 4);
+        Player.Rotate(UnityEngine.Vector3.forward * mouseX * 4);
     }
 }
