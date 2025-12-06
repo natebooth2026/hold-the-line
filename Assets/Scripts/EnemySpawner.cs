@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Rendering;
-using Unity.VisualScripting;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [System.Serializable]
+    public class EnemySpawnEntry
+    {
+        public GameObject enemyPrefab;
+        [Range(0, 100)] public float spawnWeight = 50f; // Percentage weight for Inspector
+    }
+
+    [Header("Enemy Types")]
+    [SerializeField] private List<EnemySpawnEntry> enemyTypes = new List<EnemySpawnEntry>();
 
     private List<Transform> spawnPoints = new List<Transform>();
 
@@ -21,6 +27,7 @@ public class EnemySpawner : MonoBehaviour
     private bool tick = false;
     private int currentWaveTransitionTimer;
     public bool betweenWave = false;
+
     [SerializeField] UpgradeToggle upgradeTrackerScript;
 
     private void Awake()
@@ -43,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
     private void tickTimer()
     {
         --currentWaveTransitionTimer;
-        if(currentWaveTransitionTimer == 0) 
+        if (currentWaveTransitionTimer == 0)
         {
             betweenWave = false;
             currentWaveTransitionTimer = (int)timeBetweenWaves;
@@ -62,8 +69,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
-        if(betweenWave && !tick 
-        && !upgradeTrackerScript.activeUpgradeMenu) 
+        if (betweenWave && !tick
+        && !upgradeTrackerScript.activeUpgradeMenu)
             StartCoroutine(repeatTimer());
     }
 
@@ -75,6 +82,26 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    // --- NEW: Weighted selection function ---
+    private GameObject GetWeightedRandomEnemy()
+    {
+        float totalWeight = 0f;
+
+        foreach (var entry in enemyTypes)
+            totalWeight += entry.spawnWeight;
+
+        float roll = Random.Range(0, totalWeight);
+        float cumulative = 0f;
+
+        foreach (var entry in enemyTypes)
+        {
+            cumulative += entry.spawnWeight;
+            if (roll <= cumulative)
+                return entry.enemyPrefab;
+        }
+
+        return enemyTypes[0].enemyPrefab; // Fallback
+    }
 
     private IEnumerator WaveLoop()
     {
@@ -86,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 Debug.Log("Wave " + currentWave + " started!");
 
-                // Spawn this wave's enemies
+                // Spawn enemies in this wave
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
                     SpawnEnemyAtRandomPoint();
@@ -95,7 +122,8 @@ public class EnemySpawner : MonoBehaviour
 
                 // Wait until all enemies are dead
                 yield return new WaitUntil(() =>
-                    GameObject.FindGameObjectsWithTag("Enemy").Length == 0
+                    GameObject.FindGameObjectsWithTag("Enemy").Length == 0 &&
+                    GameObject.FindGameObjectsWithTag("InvisibleEnemy").Length == 0
                 );
 
                 betweenWave = true;
@@ -103,21 +131,28 @@ public class EnemySpawner : MonoBehaviour
                 // Increase difficulty
                 enemiesPerWave += 2;
                 currentWave++;
-            } else
+            }
+            else
             {
                 yield return new WaitUntil(() =>
                     betweenWave == false
                 );
             }
-            
         }
     }
 
     private void SpawnEnemyAtRandomPoint()
     {
+        if (enemyTypes.Count == 0)
+        {
+            Debug.LogError("EnemySpawner has no enemy types assigned!");
+            return;
+        }
+
         int index = Random.Range(0, spawnPoints.Count);
         Transform point = spawnPoints[index];
 
-        Instantiate(enemyPrefab, point.position, point.rotation);
+        GameObject selectedEnemy = GetWeightedRandomEnemy();
+        Instantiate(selectedEnemy, point.position, point.rotation);
     }
 }
