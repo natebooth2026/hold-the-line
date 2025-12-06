@@ -11,6 +11,8 @@ public class UpgradeToggle : MonoBehaviour
     [SerializeField] GameObject firstPersonCam;
     [SerializeField] GameObject birdseyeCam;
     [SerializeField] GameObject upgradeMenu;
+    [SerializeField] ManualTurret lGun;
+    [SerializeField] ManualTurret rGun;
     [SerializeField] EnemySpawner trackerScript;
     private bool canToggleBack = true;
 
@@ -42,12 +44,8 @@ public class UpgradeToggle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(trackerScript == null)
-        {
-            Debug.LogWarning("UpgradeToggle: One or more required references are missing!");
-            return;
-        }
-        if (Input.GetKeyDown(KeyCode.U) && (!trackerScript.betweenWave || (trackerScript.betweenWave && canToggleBack)))
+        if (Input.GetKeyDown(KeyCode.U) && !lGun.isShooting && !rGun.isShooting 
+        && (!trackerScript.betweenWave || (trackerScript.betweenWave && canToggleBack)))
         {
             StartCoroutine(toggleCooldown());
             activeUpgradeMenu = !activeUpgradeMenu;

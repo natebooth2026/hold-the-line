@@ -9,10 +9,10 @@ using UnityEngine.Scripting;
 public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
-    [SerializeField] Transform gun, bulletSpawnPoint;
+    [SerializeField] Transform gun;
     [SerializeField] GameObject enemyContainer;
 
-    [SerializeField] Transform turret;
+    private Transform turret;
     public Transform player;
     private HealthBarManager playerControl;
 
@@ -38,9 +38,6 @@ public class EnemyAI : MonoBehaviour
     //Upgrade Menu Toggle
     [SerializeField] GameObject eventSystem;
     private UpgradeToggle upgradeToggle;
-    [Header("Barrel Aim")]
-    [Tooltip("Pitch offset (degrees) applied to the gun when aiming. Positive = rotate up.")]
-    public float barrelPitchOffset = 0f;
 
     void OnDrawGizmosSelected()
     {
@@ -51,7 +48,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Auto-assign components
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("gunner_gun_connector").transform;
+        player = GameObject.Find("TurretSeat").transform;
         eventSystem = GameObject.Find("EventSystem");
         if(tempObjHolder == null)
             tempObjHolder = GameObject.Find("PROJECTILES").transform;
@@ -68,22 +65,7 @@ public class EnemyAI : MonoBehaviour
         if (health <= 0) health = 1;
 
         upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
-        if (turret == null)
-        {
-            if (transform.childCount > 1)
-            {
-                turret = transform.GetChild(1);
-            } else
-            {
-                Debug.LogWarning($"{transform.name} has small number of children!");
-            }
-        }
-
-        if (bulletSpawnPoint == null)
-        {
-            Debug.LogWarning("Missing bullet spawn point transform");
-            bulletSpawnPoint = gun; // fallback to gun position
-        }
+        turret = transform.GetChild(1);
     }
 
 
@@ -96,9 +78,10 @@ public class EnemyAI : MonoBehaviour
         {
             //Check for sight and attack range
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
-            if (!playerInAttackRange){
-                MoveToPlayer();
-            } else{
+            if (!playerInAttackRange) MoveToPlayer();
+
+            if (playerInAttackRange)
+            {
                 AttackPlayer();
             }
             
@@ -128,15 +111,15 @@ public class EnemyAI : MonoBehaviour
         bool raycastSuccess = false;
         UnityEngine.Vector3 target = new UnityEngine.Vector3();
 
-        Vector3 forward = new Vector3(bulletSpawnPoint.forward.x, bulletSpawnPoint.forward.y, bulletSpawnPoint.forward.z);
-        Ray r = new Ray(bulletSpawnPoint.position, forward);
+        Vector3 forward = new Vector3(gun.forward.x, gun.forward.y, gun.forward.z);
+        Ray r = new Ray(gun.position, forward);
         raycastSuccess = Physics.Raycast(r, maxRayDistance);
 
         if (raycastSuccess)
         {
             target = r.origin + r.direction * maxRayDistance;
 
-            UnityEngine.Vector3 tempPos = bulletSpawnPoint.position;
+            UnityEngine.Vector3 tempPos = gun.position;
 
             GameObject temp = Instantiate(projectilePrefab, tempPos, UnityEngine.Quaternion.identity, tempObjHolder);
 
@@ -168,33 +151,15 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackPlayer()
     {
-        //Make sure enemy doesn't move by making its speed 0
-        agent.speed = 0;
-        
+        //Make sure enemy doesn't move
+        agent.SetDestination(transform.position);
+
+        turret.LookAt(player);
 
         //Attack code here
         if (health > 0 && !shooting)
         {
             StartCoroutine(repeatShoot(cooldown));
-        }
-
-        if (player != null)
-        {
-            // Rotate the turret to face the player
-            // turret.LookAt(player);
-
-            // Apply a pitch offset to the gun/barrel so you can tune its elevation angle
-            if (gun != null)
-            {
-                // Direction from gun to player
-                Vector3 dir = (player.position - gun.position).normalized;
-
-                // Rotate the direction around the turret's local right axis by the pitch offset
-                Vector3 rotatedDir = Quaternion.AngleAxis(barrelPitchOffset, turret.right) * dir;
-
-                // Point the gun along the rotated direction, using turret.up as the world-up reference
-                gun.rotation = Quaternion.LookRotation(rotatedDir, turret.up);
-            }
         }
     }
 }

@@ -11,7 +11,7 @@ public class GameoverToggle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(healthTracker != null && healthTracker.currentHealth <= 0)
+        if(healthTracker.currentHealth <= 0)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
