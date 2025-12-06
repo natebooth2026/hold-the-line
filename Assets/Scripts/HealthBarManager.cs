@@ -30,7 +30,7 @@ public class HealthBarManager : MonoBehaviour
     {
         currentHealth = health; // Update current health
         if(currentHealth <= 0) currentHealth = 0;
-        healthText.text = "Health: " + currentHealth + "%"; // Display health as a percentage for now
+        healthText.text = "Health: " + currentHealth.ToString() + "%"; // Display health as a percentage for now
     }
 
     // Start is called before the first frame update to initialize the health display
