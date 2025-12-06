@@ -2,47 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.Scripting;
 
 public class AITurretController : MonoBehaviour
 {
-    [Header("Aiming")]
     public float rotationSpeed = 5f;
     public bool instantAim = false;
-
-    [Header("Shooting")]
-    public float cooldown = 2f;
-    public float projectileSpeed = 10f;
-
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform gun;
-    [SerializeField] private Transform tempObjHolder;
 
     private Transform currentTarget;
 
     private bool shooting = false;
+    public float cooldown = 2f;
+    [SerializeField] GameObject projectilePrefab;
+    [SerializeField] public Transform tempObjHolder;
+    [SerializeField] Transform gun;
+    public float projectileSpeed = 10f;
     private const float PROJECTILE_DESTROY_TIME = 5f;
 
     void Start()
     {
-        // Auto-find or auto-create ProjectileHolder
-        if (tempObjHolder == null)
-        {
-            GameObject holder = GameObject.FindWithTag("ProjectileHolder");
-
-            if (holder == null)
-            {
-                holder = new GameObject("ProjectileHolder");
-                holder.tag = "ProjectileHolder";
-            }
-
-            tempObjHolder = holder.transform;
-        }
-
-        // Debug validations
-        if (gun == null) Debug.LogError("[AITurret] Gun reference is NULL!");
-        if (projectilePrefab == null) Debug.LogError("[AITurret] Projectile Prefab is NULL!");
+        if(tempObjHolder == null) tempObjHolder = GameObject.FindWithTag("ProjectileHolder").transform;
     }
-
 
     void Update()
     {
@@ -52,34 +34,32 @@ public class AITurretController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(direction);
 
             if (instantAim)
+            {
                 transform.rotation = targetRotation;
+            }
             else
+            {
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
         }
     }
 
-    // Trigger detection
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy") && currentTarget == null)
         {
+            Debug.Log("Enemy entered turret range: " + other.name);
             currentTarget = other.transform;
         }
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
+    private void OnTriggerStay(Collider other){
+        if(other.CompareTag("Enemy") && currentTarget != null)
         {
-            if (currentTarget == null)
-            {
-                currentTarget = other.transform; // find target again if lost
-            }
-
-            if (!shooting && currentTarget != null)
-            {
-                StartCoroutine(RepeatShoot());
-            }
+            if(!shooting) StartCoroutine(repeatShoot(cooldown));
+        } else if (currentTarget == null)
+        {
+            OnTriggerEnter(other);
         }
     }
 
@@ -87,59 +67,50 @@ public class AITurretController : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && other.transform == currentTarget)
         {
+            Debug.Log("Enemy left turret range: " + other.name);
             currentTarget = null;
-            shooting = false; // stop firing loop
         }
     }
 
-    // Firing loop
-    private IEnumerator RepeatShoot()
-    {
-        shooting = true;
-
-        while (currentTarget != null)
-        {
-            yield return Shoot();
-            yield return new WaitForSeconds(cooldown);
-        }
-
-        shooting = false;
-    }
-
-    // SHOOT ONCE
-    private IEnumerator Shoot()
-    {
-        if (currentTarget == null)
-            yield break;
-
-        if (gun == null)
-        {
-            Debug.LogError("[AITurret] Gun is NULL, cannot shoot.");
-            yield break;
-        }
-
-        Vector3 dir = (currentTarget.position - gun.position).normalized;
-
-        GameObject temp = Instantiate(projectilePrefab, gun.position, Quaternion.identity, tempObjHolder);
-
-        Rigidbody tempBody = temp.GetComponent<Rigidbody>();
-        if (tempBody != null)
-        {
-            tempBody.useGravity = false;
-            tempBody.drag = 0f;
-            tempBody.velocity = dir * projectileSpeed;
-        }
-
-        Collider tempCollide = temp.GetComponent<Collider>();
-        if (tempCollide != null)
-            tempCollide.enabled = true;
-
-        StartCoroutine(DestroyProjectileAfterTime(temp, PROJECTILE_DESTROY_TIME));
-    }
-
-    private IEnumerator DestroyProjectileAfterTime(GameObject proj, float time)
+     private IEnumerator delayDestroyProjectile(GameObject x, float time)
     {
         yield return new WaitForSeconds(time);
-        if (proj != null) Destroy(proj);
+        if (x != null) Destroy(x);
+    }
+
+    private IEnumerator Shoot()
+    {
+        Vector3 dir;
+
+        if(currentTarget != null){
+            dir = (currentTarget.position - gun.position).normalized;
+
+            Vector3 tempPos = gun.position;
+            GameObject temp = Instantiate(projectilePrefab, tempPos, UnityEngine.Quaternion.identity, tempObjHolder);
+
+            Rigidbody tempBody = temp.GetComponent<Rigidbody>();
+            if (tempBody != null)
+            {
+                tempBody.useGravity = false;
+                tempBody.drag = 0f;
+                tempBody.velocity = dir * projectileSpeed;
+            }
+
+            Collider tempCollide = temp.GetComponent<Collider>();
+            tempCollide.enabled = true;
+
+            StartCoroutine(delayDestroyProjectile(temp, PROJECTILE_DESTROY_TIME));
+            shooting = false;
+            
+        }
+
+        yield return null;
+    }
+
+    private IEnumerator repeatShoot(float c)
+    {
+        shooting = true;
+        yield return new WaitForSeconds(c);
+        StartCoroutine(Shoot());
     }
 }

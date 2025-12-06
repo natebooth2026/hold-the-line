@@ -264,7 +264,6 @@ GameObject:
   - component: {fileID: 5609184880209615272}
   - component: {fileID: 6857015949033106234}
   - component: {fileID: 465452815385671713}
-  - component: {fileID: 4734648708497012302}
   m_Layer: 7
   m_Name: turret_pivot
   m_TagString: Untagged
@@ -303,11 +302,11 @@ MonoBehaviour:
   rotationSpeed: 5
   instantAim: 0
   cooldown: 2
-  projectileSpeed: 10
   projectilePrefab: {fileID: 50707282001121650, guid: b4d2e3ffb6e343d4e96a0d09465a1ac4,
     type: 3}
-  gun: {fileID: 7708312289220409767}
   tempObjHolder: {fileID: 0}
+  gun: {fileID: 7708312289220409767}
+  projectileSpeed: 10
 --- !u!135 &465452815385671713
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -327,35 +326,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12
-  m_Center: {x: 4, y: 0, z: 0}
---- !u!54 &4734648708497012302
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4819625448914503389}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Radius: 8
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5326210586065791911
 GameObject:
   m_ObjectHideFlags: 0

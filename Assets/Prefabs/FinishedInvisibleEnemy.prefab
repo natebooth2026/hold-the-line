@@ -644,7 +644,6 @@ GameObject:
   - component: {fileID: 3776342190795049266}
   - component: {fileID: 4104212968355416587}
   - component: {fileID: 7775406905017527925}
-  - component: {fileID: 2687237358813216821}
   m_Layer: 9
   m_Name: tank
   m_TagString: InvisibleEnemy
@@ -746,33 +745,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6225744095289370646, guid: ead5c0d05cdff904d9e031fed6f4a40c, type: 3}
---- !u!54 &2687237358813216821
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5628198632642613393}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &5940923072618053558
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +787,6 @@ GameObject:
   - component: {fileID: 7946556166380671202}
   - component: {fileID: 322729396061649588}
   - component: {fileID: 5978042914801472679}
-  - component: {fileID: 6266883376216224862}
   m_Layer: 9
   m_Name: tank_head
   m_TagString: InvisibleEnemy
@@ -890,33 +861,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &6266883376216224862
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7880362746120516228}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 122
-  m_CollisionDetection: 0
 --- !u!1 &8387751357293085257
 GameObject:
   m_ObjectHideFlags: 0
@@ -928,7 +872,6 @@ GameObject:
   - component: {fileID: 3703387111352571219}
   - component: {fileID: 1980542161568306870}
   - component: {fileID: 6422096436803804243}
-  - component: {fileID: 7283514427281495104}
   m_Layer: 9
   m_Name: tank_barrel
   m_TagString: InvisibleEnemy
@@ -1003,33 +946,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &7283514427281495104
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8387751357293085257}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 122
-  m_CollisionDetection: 0
 --- !u!1 &8623503160464194135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,7 +1102,7 @@ MonoBehaviour:
   gun: {fileID: 3703387111352571219}
   bulletSpawnPoint: {fileID: 7843456850631914163}
   enemyContainer: {fileID: 8880832550813490653}
-  turret: {fileID: 0}
+  turret: {fileID: 3703387111352571219}
   player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
