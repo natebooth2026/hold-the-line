@@ -5,51 +5,21 @@ using UnityEngine;
 
 public class ProjectileCollision : MonoBehaviour
 {
-    public LayerMask playerLayer;
-    public LayerMask enemyLayer;
-
-    bool IsInLayerMask(Collision obj, LayerMask mask)
-    {
-        if (obj == null) return false;
-        return (mask.value & (1 << obj.gameObject.layer)) != 0;
-    }
+    public int playerLayer = 8;
+    public int enemyLayer = 9;
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Projectile collided with: " + collision.gameObject.name);
-        Debug.Log("(LAYER) Projectile collided with: " + collision.gameObject.layer);
-
-        if (IsInLayerMask(collision, playerLayer))
-        {
-            HealthBarManager healthBar = FindObjectOfType<HealthBarManager>();
-            if (healthBar != null)
-            {
-                healthBar.currentHealth -= 1;
-                healthBar.UpdateHealth(healthBar.currentHealth);
-                Debug.Log("Player hit! Current Health: " + healthBar.currentHealth);
-            }
-            else
-            {
-                Debug.LogWarning("ProjectileCollision: No HealthBarManager found in the scene!");
-            }
-        }
+        if(collision == null) return;
         else
         {
-            Debug.Log("Not Player Layer!");
-        }
-
-        if (IsInLayerMask(collision, enemyLayer))
-        {
-            EnemyAI enemyAI = collision.gameObject.GetComponentInParent<EnemyAI>();
-            if (enemyAI != null)
+            Destroy(this.gameObject);
+            if(collision.gameObject.layer == playerLayer)
             {
-                enemyAI.health -= 1;
+                collision.gameObject.GetComponentInChildren<HealthBarManager>().currentHealth -= 1;
+            } else if (collision.gameObject.layer == enemyLayer)
+            {
+                collision.gameObject.GetComponentInParent<EnemyAI>().health -= 1;
             }
         }
-        else
-        {
-            Debug.Log("Not Enemy Layer!");
-        }
-
-        Destroy(gameObject);
     }
 }
