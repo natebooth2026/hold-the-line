@@ -51,7 +51,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Auto-assign components
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("gunner_gun_connector").transform;
+        player = GameObject.Find("gunner_attracter").transform;
         eventSystem = GameObject.Find("EventSystem");
         if(tempObjHolder == null)
             tempObjHolder = GameObject.Find("PROJECTILES").transform;

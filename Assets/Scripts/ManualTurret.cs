@@ -7,7 +7,7 @@ public class ManualTurret : MonoBehaviour
     [SerializeField] Transform tempObjHolder;
 
     bool shoot;
-    private string initShootName = "LeftGun";
+    public string initShootName = "turret_barrels_left";
     [SerializeField] GameObject otherGun;
     private ManualTurret otherGunScript;
 

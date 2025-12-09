@@ -88,7 +88,6 @@ public class AITurretController : MonoBehaviour
         if (other.CompareTag("Enemy") && other.transform == currentTarget)
         {
             currentTarget = null;
-            shooting = false; // stop firing loop
         }
     }
 
