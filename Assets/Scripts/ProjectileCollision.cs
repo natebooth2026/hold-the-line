@@ -1,12 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 
 public class ProjectileCollision : MonoBehaviour
 {
     public LayerMask playerLayer;
     public LayerMask enemyLayer;
+    public KillsTextManager kills;
+    private CurrencyHandler currencyHandler;
+    private int damageModifier;
+    private const int EARNED_CURRENCY = 5;
+    private GameObject sfx;
+    private AudioSource[] sfxCollection;
+    private const int ENEMY_HIT = 0;
+    void Awake()
+    {
+        currencyHandler = GameObject.Find("EventSystem").GetComponent<CurrencyHandler>();
+        sfx = GameObject.Find("SFX_SOURCE");
+        sfxCollection = sfx.GetComponents<AudioSource>();
+    }
+
+    void Update()
+    {
+        damageModifier = currencyHandler.damageModifier;
+    }
 
     bool IsInLayerMask(Collision obj, LayerMask mask)
     {
@@ -42,7 +61,13 @@ public class ProjectileCollision : MonoBehaviour
             EnemyAI enemyAI = collision.gameObject.GetComponentInParent<EnemyAI>();
             if (enemyAI != null)
             {
-                enemyAI.health -= 1;
+                if(enemyAI.health - damageModifier <= 0) 
+                {
+                    if(kills != null) ++kills.kills;
+                    currencyHandler.currency += EARNED_CURRENCY;
+                }
+                enemyAI.health -= damageModifier;
+                sfxCollection[ENEMY_HIT].Play();
             }
         }
         else

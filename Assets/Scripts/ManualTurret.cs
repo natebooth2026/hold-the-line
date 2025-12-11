@@ -6,7 +6,7 @@ public class ManualTurret : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform tempObjHolder;
 
-    bool shoot;
+    public bool shoot;
     public string initShootName = "turret_barrels_left";
     [SerializeField] GameObject otherGun;
     private ManualTurret otherGunScript;
@@ -20,6 +20,16 @@ public class ManualTurret : MonoBehaviour
 
     [SerializeField] GameObject eventSystem;
     private UpgradeToggle upgradeToggle;
+    private KillsTextManager killsTextManager;
+    private GameObject sfx;
+    private AudioSource[] sfxCollection;
+    private const int SHOOT_SOUND = 1;
+
+    void Awake()
+    {
+        sfx = GameObject.Find("SFX_SOURCE");   
+        sfxCollection = sfx.GetComponents<AudioSource>();
+    }
 
     private void Start()
     {
@@ -29,6 +39,7 @@ public class ManualTurret : MonoBehaviour
             shoot = true;
         }
         upgradeToggle = eventSystem.GetComponent<UpgradeToggle>();
+        killsTextManager = eventSystem.GetComponent<KillsTextManager>();
     }
     private void Update()
     {
@@ -43,6 +54,7 @@ public class ManualTurret : MonoBehaviour
 
     private IEnumerator ProjectileLaunch() {
         isShooting = true;
+        sfxCollection[SHOOT_SOUND].Play();
 
         bool raycastSuccess = false;
         UnityEngine.Vector3 target = new UnityEngine.Vector3();
@@ -57,6 +69,7 @@ public class ManualTurret : MonoBehaviour
             UnityEngine.Vector3 tempPos = transform.position;
 
             GameObject temp = Instantiate(projectilePrefab, tempPos, UnityEngine.Quaternion.identity, tempObjHolder);
+            temp.GetComponent<ProjectileCollision>().kills = killsTextManager;
 
             UnityEngine.Vector3 dir = (target - temp.transform.position).normalized;
 
@@ -72,11 +85,10 @@ public class ManualTurret : MonoBehaviour
             tempCollide.enabled = true;
 
             StartCoroutine(delayDestroyProjectile(temp, PROJECTILE_DESTROY_TIME));
-
             yield return new WaitForSeconds(shootSwitchBuffer);
-            otherGunScript.shoot = true;
-            isShooting = false;
         }
+        otherGunScript.shoot = true;
+        isShooting = false;
     }
 
     private IEnumerator delayDestroyProjectile(GameObject x, float time)

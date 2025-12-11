@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class HealthBarManager : MonoBehaviour
 {
     public static HealthBarManager instance; // Singleton instance
 
-    public Text healthText; // Reference to the UI Text component for displaying health
+    public TextMeshProUGUI healthText; // Reference to the UI Text component for displaying health
 
     public int currentHealth = 100; // Default health value
 

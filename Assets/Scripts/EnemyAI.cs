@@ -33,7 +33,7 @@ public class EnemyAI : MonoBehaviour
     public float attackRange;
     public bool playerInAttackRange;
     private bool shooting = false;
-    [SerializeField] public int health;
+    public int health;
 
     //Upgrade Menu Toggle
     [SerializeField] GameObject eventSystem;
@@ -41,6 +41,8 @@ public class EnemyAI : MonoBehaviour
     [Header("Barrel Aim")]
     [Tooltip("Pitch offset (degrees) applied to the gun when aiming. Positive = rotate up.")]
     public float barrelPitchOffset = 0f;
+
+    private EnemySpawner spawner;
 
     void OnDrawGizmosSelected()
     {
@@ -84,6 +86,9 @@ public class EnemyAI : MonoBehaviour
             Debug.LogWarning("Missing bullet spawn point transform");
             bulletSpawnPoint = gun; // fallback to gun position
         }
+
+        spawner = GameObject.Find("EnemySpawnLocations").GetComponent<EnemySpawner>();
+        health = spawner.currentWave;
     }
 
 

@@ -152,3 +152,4 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+  kills: {fileID: 0}

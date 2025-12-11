@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
 
     [SerializeField] private TextMeshProUGUI waveText;
-    private int currentWave = 1;
+    public int currentWave = 1;
     private bool tick = false;
     private int currentWaveTransitionTimer;
     public bool betweenWave = false;
@@ -63,7 +63,8 @@ public class EnemySpawner : MonoBehaviour
         tick = true;
         yield return new WaitForSeconds(1f);
         tickTimer();
-        waveText.text = currentWaveTransitionTimer.ToString();
+        if(!upgradeTrackerScript.activeUpgradeMenu) waveText.text = currentWaveTransitionTimer.ToString();
+        else waveText.text = "";
         tick = false;
     }
 
@@ -76,9 +77,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void UpdateWaveUI()
     {
-        if (waveText != null && !betweenWave)
+        if (waveText != null && !betweenWave && !upgradeTrackerScript.activeUpgradeMenu)
         {
             waveText.text = "Wave: " + currentWave;
+        } else if (waveText != null && !betweenWave)
+        {
+            waveText.text = "";   
         }
     }
 
@@ -116,7 +120,7 @@ public class EnemySpawner : MonoBehaviour
                 // Spawn enemies in this wave
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
-                    SpawnEnemyAtRandomPoint();
+                    SpawnEnemyAtRandomPoint(currentWave);
                     yield return new WaitForSeconds(timeBetweenSpawns);
                 }
 
@@ -130,7 +134,7 @@ public class EnemySpawner : MonoBehaviour
 
                 // Increase difficulty
                 enemiesPerWave += 2;
-                currentWave++;
+                ++currentWave;
             }
             else
             {
@@ -141,7 +145,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void SpawnEnemyAtRandomPoint()
+    private void SpawnEnemyAtRandomPoint(int wave)
     {
         if (enemyTypes.Count == 0)
         {

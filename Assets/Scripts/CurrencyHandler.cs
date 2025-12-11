@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 using Unity.Mathematics;
 
@@ -10,17 +6,24 @@ public class CurrencyHandler : MonoBehaviour
 {
     public int currency = 100; //100 for testing
     public const int AI_TURRET_PRICE = 30;
-    [SerializeField] TextMeshProUGUI currencyCount; 
     [SerializeField] GameObject AITurretPrefab;
     [SerializeField] Transform AITurretContainer;
+    public const int INCREASE_DAMAGE_PRICE = 50;
+    public int damageModifier;
+    public const int INCREASE_HEALTH_PRICE = 70;
+    private const int INCREASE_HEALTH_BY = 35;
+    [SerializeField] HealthBarManager healthScript;
+    [SerializeField] TextMeshProUGUI currencyCount; 
     [SerializeField] GameObject eventSys;
-    [SerializeField] Transform bulletHolder;
-    // Start is called before the first frame update
-
     [SerializeField] Transform hexMap;   // parent of tiles
     //[SerializeField] Transform turretHolder; // optional: parent for spawned turrets
 
     int nextSpawnIndex = 1;// start at 1 to skip the first tile which is under the player base
+
+    void Awake()
+    {
+        damageModifier = 1;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -52,6 +55,24 @@ public class CurrencyHandler : MonoBehaviour
             );
 
             nextSpawnIndex++; // move to the next tile
+        }
+    }
+
+    public void IncreaseDamage()
+    {
+        if(currency - INCREASE_DAMAGE_PRICE >= 0)
+        {
+            currency -= INCREASE_DAMAGE_PRICE;
+            ++damageModifier;
+        }
+    }
+
+    public void IncreaseHealth()
+    {
+        if(currency - INCREASE_HEALTH_PRICE >= 0)
+        {
+            currency -= INCREASE_HEALTH_PRICE;
+            healthScript.currentHealth += INCREASE_HEALTH_BY;
         }
     }
 
