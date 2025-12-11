@@ -17,7 +17,7 @@ public class AITurretController : MonoBehaviour
     [SerializeField] private Transform gun;
     [SerializeField] private Transform tempObjHolder;
 
-    private Transform currentTarget;
+    private Transform currentTarget = null;
 
     private bool shooting = false;
     private const float PROJECTILE_DESTROY_TIME = 5f;
